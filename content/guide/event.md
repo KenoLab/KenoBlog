@@ -1,9 +1,9 @@
 ---
 title: "Events"
-description: "Fonctionnement des événements Kenolab."
+description: "How Kenolab publishes their content"
 weight: 30
 ---
 
-# Events
+## KenoEvent
 
-Informations concernant les événements Kenolab.
+Information about Kenolab events.

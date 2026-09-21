@@ -1,9 +1,9 @@
 ---
 title: "Bot Commands"
-description: "Liste des commandes disponibles sur le bot Kenolab."
+description: "Kenobot helping page"
 weight: 20
 ---
 
-# Bot Commands
+## KenoBot Commands
 
-Documentation des commandes disponibles.
+Documentation of available bot commands.

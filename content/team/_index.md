@@ -1,23 +1,24 @@
 ---
-title: "Team"
-description: "Découvrez l'équipe derrière Kenolab."
+title: "KenoTeam"
+description: "Meet the people behind KenoLab."
 weight: 10
+icon: "team.svg"
+----------------
+
+KenoLab is built and maintained by cybersecurity enthusiasts who enjoy building labs, researching new techniques, creating challenges, and sharing knowledge with the community.
+
 ---
 
-# Team
+## anh4ckin
 
-Présentation de l'équipe Kenolab.
+{{<notice snack>}}
+Currently working on SOC level 3. Passionate about Active Directory stuff and DevSecOps.
+{{</notice>}}
 
-## Membres
+**Links:**
 
-### Username
+- Github : [https://github.com/4nh4ck1ne](https://github.com/4nh4ck1ne)
+- X/Twitter : [https://x.com/LeandreOnizuka](https://x.com/LeandreOnizuka)
 
-**Rôle :** Pentest / Infrastructure
+---
 
-Courte présentation du membre.
-
-### Username2
-
-**Rôle :** Development
-
-Courte présentation du membre.

@@ -1,9 +1,10 @@
 ---
 title: "VPN Usage"
-description: "Se connecter aux environnements Kenolab avec le VPN."
+description: "Access Kenolab environments with the VPN"
 weight: 10
 ---
 
-# VPN Usage
+## VPN Usage
 
-Documentation concernant l'utilisation du VPN Kenolab.
+Documentation regarding the use of Kenolab VPN.
+

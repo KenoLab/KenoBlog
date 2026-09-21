@@ -2,8 +2,7 @@
 title: "Guide"
 description: "Documentation et guides d'utilisation de Kenolab."
 weight: 20
+icon: "compass.svg"
 ---
 
-# Guide
-
-Retrouvez ici les différents guides nécessaires pour utiliser Kenolab.
+Find here the different guides needed to use Kenolab.

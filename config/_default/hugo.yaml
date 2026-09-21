@@ -29,3 +29,8 @@ enableRobotsTXT: true
 # Log Settings
 # ignoreLogs:
 #   - error-remote-getcsv
+
+taxonomies:
+  tag: tags
+  category: categories
+  author: authors

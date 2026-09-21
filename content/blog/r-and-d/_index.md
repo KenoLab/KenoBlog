@@ -1,4 +1,4 @@
 ---
-title: Recherche and devellopement
+title: R&D
 description: Find some interrasting thinks.
 ---

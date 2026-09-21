@@ -36,7 +36,7 @@ article:
     display: false
     showProgress: false
   pageResources:
-    display: true
+    display: false
   # Content status warnings (draft and expiry alerts)
   statusWarnings:
     display: true
