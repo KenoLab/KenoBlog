@@ -1,4 +1,12 @@
+# Hugo generated website
 /public/
+
+# Hugo generated resources
 /resources/_gen/
-.hugo_build.lock
+
+# Hugo generated files
+/hugo_stats.json
+/.hugo_build.lock
+
+# OS
 .DS_Store

@@ -1,7 +1,0 @@
-Sitemap: http://localhost:1313/sitemap.xml
-
-# Default crawling rules
-User-agent: *
-Allow: /
-
-# Disallow crawling of specific pages
