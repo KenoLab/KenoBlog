@@ -2,7 +2,7 @@
 ## Site Details
 baseURL: 'https://blog.kenolab.eu/'
 languageCode: 'en-us'
-title: 'KenoBlog'
+title: 'KenoWiki'
 theme: milodocs
 
 ## Performance Optimizations
