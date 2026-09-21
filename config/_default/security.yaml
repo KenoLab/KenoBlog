@@ -1,0 +1,12 @@
+exec:
+  allow:
+    - '^dart-sass-embedded$'
+    - '^go$'
+    - '^npx$'
+    - '^postcss$'
+    - '^rst2html.py$'
+    - '^rst2html$'
+    - '^asciidoctor$'
+    - "^git$"
+  osEnv: 
+    - (?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|HOME|GEM_PATH)$

@@ -1,0 +1,31 @@
+# Hugo Global Settings 
+## Site Details
+baseURL: 'https://milodocs-theme.netlify.app/'
+languageCode: 'en-us'
+title: 'MiloDocs'
+theme: milodocs
+
+## Performance Optimizations
+minify:
+  minifyOutput: true
+  
+# Image processing for modern formats and optimization
+imaging:
+  resampleFilter: "lanczos"
+  quality: 85
+  hint: "photo"
+  formats: ["webp", "jpg"]
+  
+# Build optimizations  
+build:
+  useResourceCacheWhen: "fallback"
+  writeStats: true
+
+## Misc
+enableGitInfo: true 
+enableEmoji: true 
+enableRobotsTXT: true 
+
+# Log Settings
+# ignoreLogs:
+#   - error-remote-getcsv

@@ -1,0 +1,8 @@
+# MiloDocs
+
+## Metadata
+
+- **Section**: Home
+- **Type**: page
+
+## Navigation
