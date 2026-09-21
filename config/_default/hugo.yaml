@@ -1,8 +1,8 @@
 # Hugo Global Settings 
 ## Site Details
-baseURL: 'https://milodocs-theme.netlify.app/'
+baseURL: 'https://blog.kenolab.eu/'
 languageCode: 'en-us'
-title: 'MiloDocs'
+title: 'KenoBlog'
 theme: milodocs
 
 ## Performance Optimizations
