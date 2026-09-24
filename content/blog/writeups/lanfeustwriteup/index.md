@@ -1,21 +1,27 @@
 ---
-layout: post
 title: Lanfeust 2026 Lab - Insane
-date: 2026-09-20
-categories: [Custom, Lab]
-tags: [Custom, Lab, SSRF, ESC7, ESC17, Dollar ticket, WDAC, Shadowcreds, GMSA]
-author: Ethicxz
-image: assets/image_start/adlabcustom.png
-description: Lanfeust Lab by Ethicxz
+description: "Lanfeust Lab by Ethicxz"
+authors: 
+    - ethicxz
+date: 2026-09-21
+weight: 30
+tags:
+    - SSRF
+    - ESC7
+    - ESC17
+    - "Dollar ticket"
+    - "WDAC"
+    - Shadowcreds
+    - GMSA
 ---
 
 Hello ! Today i'm going to share a write-up of an AD lab that i completed [with the Kenolab's team](https://x.com/kenolab_fr/)
 
-The lab was created and presented by [mpgn](https://x.com/mpgn_x64) and [mael91620](https://x.com/mael91620)
+The lab was created and presented by **[mpgn](https://x.com/mpgn_x64)** and **[mael91620](https://x.com/mael91620)**
 
-It was a lab involving 2 domains and 5 machines - we had half a day to complete it but we finished it in 6 hours and got 9 out of 12 first bloods & finishing in first at the end of the event !!
+It was a lab involving 2 domains and 5 machines - we had half a day to complete it but we finished it in 6 hours and got **9 out of 12** first bloods & finishing in first at the end of the event !!
 
-![alt text](images/scoreboard.png)
+![scoreboard](images/scoreboard.png)
 
 I'm writing this write-up based on the notes i took during the lab so I don’t have many screenshots - I wasn't able to repeat the lab to take any - I hope the write-up will still be cool !
 
@@ -32,7 +38,7 @@ DARSHAN.LAB
 
 ---
 
-# Before Starting
+## Before Starting
 
 ```console
 sudo wg-quick up ./troy01-04.conf
@@ -155,10 +161,11 @@ The payload in the form `goods` is :
 ```
 
 Inside this file, we were able to find : 
-
+```
 - a leak of the share's name `\\GLININ\IT$`
 - an base64 encoded PFX belonging to `cixi@troy.lab`
 - the PFX password
+```
 
 ### 3. First account in TROY.LAB
 
@@ -448,7 +455,7 @@ pip install dsinternals cryptography
 python generate_shadow_material.py --account nicolede --dn 'CN=nicolede,CN=Users,DC=troy,DC=lab' --out nicolede-shadow
 ```
 
-```bash
+```python
 #!/usr/bin/env python3
 import argparse
 from pathlib import Path
@@ -689,11 +696,12 @@ ORAZUR is our Linux server, don't forget to administer it too before go-live.
 The note immediately pointed us toward `ORAZUR`, the only Linux host in the lab - The machine only exposed SSH, and the information collected with BloodHound described it as a domain-joined Linux server administered through Kerberos SSO.
 
 This combination was interesting :
-
+```
 - ORAZUR was joined to `DARSHAN.LAB`
 - SSH accepted Kerberos through GSSAPI
 - the host used the usual MIT Kerberos / SSSD principal-to-local-user translation
 - the trust account gave us an authenticated identity capable of creating a computer account in DARSHAN
+```
 
 This made us think about a [Dollar Ticket attack](https://www.thehacker.recipes/ad/movement/kerberos/principal-confusion/dollar-ticket).
 
@@ -710,11 +718,12 @@ The Kerberos ticket itself remains valid and belongs to the real AD machine acco
 If SSH accepts GSSAPI and maps `root$` to the local `root` account, controlling the machine account effectively gives a root SSH session.
 
 The attack therefore required four conditions, all of which were present in the lab :
-
+```
 - [x] We could create a machine account in DARSHAN.
 - [x] We knew the password of the machine account we created.
 - [x] ORAZUR accepted SSH authentication through GSSAPI.
 - [x] Its Kerberos mapping stripped the trailing `$` and did not reject the machine-account PAC.
+```
 
 ### 15. Exploiting the Dollar Ticket
 
@@ -835,10 +844,10 @@ Two other CA-level values were worth clarifying. `User Specified SAN: Disabled` 
 Likewise, `Request Disposition: Issue` was the CA default but a template with `PendAllRequests` could still override that behavior and force its own requests into the pending queue.
 
 Those two permissions are often grouped under ESC7, but they do not provide the same primitive :
-
+```text
 - `ManageCa` allows an attacker to modify CA-level settings, roles and some CA properties
 - `ManageCertificates` allows a certificate manager to approve, deny and manage certificate requests submitted to the CA
-
+```
 This made our ESC7 path slightly less direct than the usual `ManageCA` abuse - `ORAZUR$` could not simply change the CA configuration and immediately request any certificate it wanted. 
 
 Instead, we needed another controlled principal to submit a valid request through an enabled template - That request had to be accepted by the template, placed in the pending queue and then approved by `ORAZUR$`.
@@ -895,13 +904,14 @@ Certificate Templates
 ```
 
 Several properties made `DarshanLogin` perfect for the approval workflow we needed :
-
+```text
 - it was enabled on `DARSHAN-CA`
 - every authenticated principal had enrollment rights, so our controlled `root$` account could submit a request
 - the `Client Authentication` EKU made the resulting certificate usable for authentication
 - `EnrolleeSuppliesSubject` allowed the requester to place an identity inside the CSR instead of being forced to use the identity of `root$`
 - `Authorized Signatures Required: 0` meant that no enrollment-agent signature was required
 - `PendAllRequests` and `Requires Manager Approval` forced every request into the pending queue
+```
 
 The last property looked like a protection but it was exactly what connected the template to our ESC7 permission - A normal requester could submit a certificate request but could not make the CA issue it. 
 
