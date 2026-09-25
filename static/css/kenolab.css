@@ -463,3 +463,201 @@ footer a:hover {
 .article-author-name:hover {
     color: var(--keno-purple-light);
 }
+
+.article-toc-title {
+    color: var(--keno-white);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    margin-bottom: 14px;
+}
+
+.article-toc-sidebar {
+    position: sticky;
+
+    top: 25px;
+
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+
+    margin-top: 40px;
+    padding: 18px 0 18px 18px;
+
+    border-left: 2px solid var(--keno-border);
+}
+.article-toc-sidebar #TableOfContents ul {
+    list-style: none;
+
+    margin: 0;
+    padding-left: 0;
+}
+
+.article-toc-sidebar #TableOfContents ul ul {
+    padding-left: 14px;
+
+    margin-top: 5px;
+}
+
+.article-toc-sidebar #TableOfContents li {
+    margin: 8px 0;
+
+    line-height: 1.35;
+}
+
+.article-toc-sidebar #TableOfContents a {
+    color: var(--keno-muted);
+
+    font-size: 0.82rem;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.article-toc-sidebar #TableOfContents a:hover {
+    color: var(--keno-purple-light);
+}
+
+
+/* Small scrollbar */
+
+.article-toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.article-toc-sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--keno-purple-700);
+
+    border-radius: 4px;
+}
+
+.article-toc-mobile {
+    margin: 25px 0 35px;
+
+    padding: 20px 22px;
+
+    background-color: var(--keno-purple-900);
+
+    border: 1px solid var(--keno-border);
+    border-left: 3px solid var(--keno-purple);
+
+    border-radius: 6px;
+}
+
+.article-toc-mobile #TableOfContents ul {
+    list-style: none;
+
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.article-toc-mobile #TableOfContents ul ul {
+    padding-left: 18px;
+}
+
+.article-toc-mobile #TableOfContents li {
+    margin: 7px 0;
+}
+
+.article-toc-mobile #TableOfContents a {
+    color: var(--keno-muted);
+
+    text-decoration: none;
+}
+
+.article-toc-mobile #TableOfContents a:hover {
+    color: var(--keno-purple-light);
+}
+
+.team-member {
+    margin: 30px 0 40px;
+}
+
+
+/* Header containing avatar + username */
+
+.team-member-header {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+
+/* Avatar */
+
+.team-member-avatar-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.team-member-avatar {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid var(--keno-purple-700);
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.team-member-avatar:hover {
+    border-color: var(--keno-purple-light);
+
+    transform: scale(1.05);
+}
+
+
+/* Username */
+
+.team-member-name {
+    color: var(--keno-white) !important;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    text-decoration: none !important;
+}
+
+.team-member-name:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+
+/* Description */
+
+.team-member-content {
+    color: #e6e1eb;
+}
+
+.team-member-content p {
+    margin-bottom: 14px;
+}
+
+.team-member-content ul {
+    margin-bottom: 0;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .team-member-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .team-member-name {
+        font-size: 1.3rem;
+    }
+
+}
