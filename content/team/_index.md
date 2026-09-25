@@ -22,3 +22,14 @@ Currently working on SOC level 3. Passionate about Active Directory stuff and De
 
 ---
 
+## ethicxz
+
+{{<notice snack>}}
+babyfoot player.
+{{</notice>}}
+
+**Links:**
+
+- HackTheBox : [https://app.hackthebox.com/public/users/1704836](https://app.hackthebox.com/public/users/1704836) 
+- Blog : [https://ethicxz.github.io/](https://ethicxz.github.io/)
+- X/Twitter : [https://x.com/ethicxz](https://x.com/ethicxz)
