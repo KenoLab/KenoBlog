@@ -1,263 +1,65 @@
-{{- define "top-bar" -}}
+{{ define "main" }}
 
-  {{- partial "navigation/topbar/main.html" . -}}
+<main class="blog-content">
+    <div class="container-md">
+        <div class="row">
+            <!-- <div class="col-lg-8 offset-lg-2 px-lg-4"> -->
+            <div class="col-lg-2 d-none d-xl-block">
+                <div class="ad-left-offset"></div>
+                {{ partial "ads.html" "ads/vertical-ad.js"}}
+            </div>
 
-{{- end -}}
+            <div class="col-md-12 col-lg-8 px-lg-4">
+                {{ partial "ads.html" "ads/horizontal-ad.js" }}
 
+                <h1 class="title">{{ .Title }}</h1>
 
-{{- define "sidebar-left" -}}
+                <div class="container-fluid px-0 mb-4">
+                    <div class="row align-items-end">
+                        <div class="col-md-4 date-time">
+                            {{ partial "authors.html" . }}
+                            {{ partial "date.html" .Date }}
+                            &centerdot;
+                            {{ partial "time-to-read.html" .}}
+                        </div>
 
-  {{- partial "navigation/sidebar-left.html" . -}}
-
-{{- end -}}
-
-
-{{- define "breadcrumbs" -}}
-
-  <div class="mb-4 mx-auto max-w-3xl xl:max-w-4xl 2xl:max-w-5xl">
-
-    {{ partial "article/header.html" . }}
-
-  </div>
-
-{{- end -}}
-
-
-{{ define "content" }}
-
-  <article class="prose mx-auto max-w-3xl xl:max-w-4xl 2xl:max-w-5xl">
-
-    {{/* Content status warnings */}}
-
-    {{- if site.Params.article.statusWarnings.display -}}
-
-      {{- partial "article/status-warnings.html" . -}}
-
-    {{- end -}}
-
-
-    <header class="mb-6 not-prose">
-
-      {{/* Show front matter title only if content does not start with H1 */}}
-
-      {{- if partial "utils/title-guard.html" . -}}
-
-        <h1
-          class="text-3xl font-bold mb-3"
-          style="color: var(--color-text-primary);"
-        >
-          {{ .Title }}
-        </h1>
-
-      {{- end -}}
-
-
-      {{/* Description */}}
-
-      {{- with .Description -}}
-
-        <div class="article-description not-prose mb-6 flex items-center gap-4">
-
-          <div
-            class="w-1 h-10 rounded-full flex-shrink-0"
-            style="background-color: var(--color-brand); opacity: 0.25;"
-          ></div>
-
-          <div class="flex-1">
-
-            <p
-              class="text-lg font-light leading-relaxed"
-              style="color: var(--color-text-secondary); font-weight: 300;"
-            >
-              {{ . }}
-            </p>
-
-          </div>
-
-        </div>
-
-      {{- end -}}
-
-
-      {{/* Authors */}}
-
-      {{- if site.Params.article.metadata.display -}}
-
-        {{- with .GetTerms "authors" -}}
-
-          <div
-            class="not-prose mb-6 flex flex-wrap items-center gap-4"
-            style="color: var(--color-text-secondary);"
-          >
-
-            {{- range . -}}
-
-              {{- $author := . -}}
-
-              <a
-                href="{{ $author.RelPermalink }}"
-                class="flex items-center gap-3"
-                style="
-                  color: inherit;
-                  text-decoration: none;
-                "
-              >
-
-                {{/* Author avatar */}}
-
-                {{- with $author.Params.avatar -}}
-
-                  {{- $avatarName := . -}}
-
-                  {{- with $author.Resources.GetMatch $avatarName -}}
-
-                    <img
-                      src="{{ .RelPermalink }}"
-                      alt="{{ $author.LinkTitle }}"
-                      width="36"
-                      height="36"
-                      style="
-                        width: 36px;
-                        height: 36px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        border: 1px solid var(--color-border-primary);
-                      "
-                    >
-
-                  {{- end -}}
-
-                {{- end -}}
-
-
-                {{/* Author information */}}
-
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    line-height: 1.2;
-                  "
-                >
-
-                  <span
-                    style="
-                      color: var(--color-text-primary);
-                      font-weight: 500;
-                    "
-                  >
-                    {{ $author.LinkTitle }}
-                  </span>
-
-                  {{- with $author.Params.role -}}
-
-                    <span
-                      style="
-                        color: var(--color-text-tertiary);
-                        font-size: 0.8rem;
-                        margin-top: 2px;
-                      "
-                    >
-                      {{ . }}
-                    </span>
-
-                  {{- end -}}
-
+                        <div class="col-md-8 tags ">
+                            {{ range .Params.tags }}
+                            <a href="{{ (print "tags/" (. | urlize) | relURL) }}"><span
+                                    class="tag bg-dark">{{ . }}</span></a>
+                            {{ end }}
+                        </div>
+                    </div>
                 </div>
 
-              </a>
+                {{ with .Page.Params.image }}
+                    {{ if or (hasPrefix . "http://") (hasPrefix . "https://") }}
+                        <figure>
+                            <img id="cover-image" src={{ . }} alt="{{ $.Title }}">
+                        </figure>
+                    {{ else }}
+                        <figure>
+                            {{ $image := $.Page.Resources.GetMatch . }}
+                            <img id="cover-image" src={{ $image.RelPermalink }} alt="{{ $.Title }}">
+                        </figure>
+                    {{ end }}
+                {{ end }}
 
-            {{- end -}}
+                {{ .Content }}
 
-          </div>
+                {{ partial "social-media-share.html" . }}
 
-        {{- end -}}
+                {{ partial "ads.html" "ads/horizontal-ad.js" }}
+                <br>
+                {{ partial "disqus.html" . }}
+            </div>
 
-      {{- end -}}
-
-    </header>
-
-
-    {{/* Inline Table of Contents */}}
-
-    {{- if site.Params.article.inlineToc.display -}}
-
-      {{- partial "article/table-of-contents.html" . -}}
-
-    {{- end -}}
-
-
-    <div id="articleContent" class="article-content">
-
-      {{ .Content }}
-
-    </div>
-
-
-    {{/* Tags */}}
-
-    {{- with .Params.tags -}}
-
-      <footer class="mt-6 pt-5 border-t not-prose">
-
-        <div class="flex flex-wrap gap-2">
-
-          {{- range . -}}
-
-            <span
-              class="inline-block px-3 py-1 rounded-full text-sm"
-              style="
-                background-color: var(--color-bg-tertiary);
-                color: var(--color-text-secondary);
-              "
-            >
-              {{ . }}
-            </span>
-
-          {{- end -}}
-
+            <div class="col-lg-2 d-none d-xl-block">
+                <div class="ad-right-offset"></div>
+                {{ partial "ads.html" "ads/vertical-ad.js"}}
+            </div>
         </div>
-
-      </footer>
-
-    {{- end -}}
-
-
-    {{/* Page Resources */}}
-
-    {{- if site.Params.article.pageResources.display -}}
-
-      {{- partial "article/page-resources.html" . -}}
-
-    {{- end -}}
-
-
-    {{/* Related Content Section */}}
-
-    {{- if site.Params.article.relatedContent.display -}}
-
-      {{- partial "article/related-content.html" . -}}
-
-    {{- end -}}
-
-  </article>
+    </div>
+</main>
 
 {{ end }}
-
-
-{{ define "innerFooter" }}
-
-  <div class="p-4">
-
-    {{ partial "article/next-prev.html" . }}
-
-  </div>
-
-{{ end }}
-
-
-{{- define "sidebar-right" -}}
-
-  {{- partial "navigation/sidebar-right.html" . -}}
-
-{{- end -}}

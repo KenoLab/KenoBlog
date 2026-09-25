@@ -1,0 +1,465 @@
+:root {
+    --keno-black: #08070b;
+
+    --keno-purple-950: #100818;
+    --keno-purple-900: #170d21;
+    --keno-purple-800: #241333;
+    --keno-purple-700: #382052;
+
+    --keno-purple: #7c3aed;
+    --keno-purple-light: #a78bfa;
+    --keno-purple-lighter: #c4b5fd;
+
+    --keno-white: #f8f7fb;
+    --keno-muted: #aaa3b5;
+
+    --keno-border: #352047;
+}
+
+html,
+body {
+    background-color: var(--keno-black);
+    color: var(--keno-white);
+}
+
+a {
+    color: var(--keno-purple-light);
+}
+
+a:hover {
+    color: var(--keno-purple-lighter);
+}
+
+#header {
+    background-color: var(--keno-black) !important;
+    border-bottom: 1px solid var(--keno-border);
+}
+
+
+/* Blog title */
+
+#header .top-bar .title a {
+    color: var(--keno-white) !important;
+}
+
+
+/* Social icons */
+
+#header .social-buttons a {
+    color: var(--keno-white) !important;
+}
+
+#header .social-buttons a:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+
+/* Search */
+
+#header .search-bar input {
+    background-color: var(--keno-black) !important;
+    color: var(--keno-white) !important;
+}
+
+#header .search-bar input::placeholder {
+    color: var(--keno-muted) !important;
+}
+
+#header .search-bar input:focus {
+    border-bottom-color: var(--keno-purple-light) !important;
+}
+
+
+/* Navbar */
+
+#header .navbar {
+    background-color: var(--keno-black) !important;
+}
+
+#header .nav-link {
+    color: var(--keno-white) !important;
+}
+
+#header .nav-link:hover,
+#header .nav-link:focus {
+    color: var(--keno-purple-light) !important;
+}
+
+
+/* Dropdown */
+
+#header .dropdown-menu {
+    background-color: var(--keno-purple-950) !important;
+    border: 1px solid var(--keno-border);
+}
+
+#header .dropdown-item {
+    color: var(--keno-white) !important;
+}
+
+#header .dropdown-item:hover,
+#header .dropdown-item:focus {
+    color: var(--keno-white) !important;
+    background-color: var(--keno-purple-800) !important;
+}
+
+#header .dropdown-divider {
+    border-color: var(--keno-border) !important;
+}
+
+.kenolab-home-intro {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(124, 58, 237, 0.18),
+            transparent 45%
+        ),
+        var(--keno-black);
+
+    padding: 60px 0;
+
+    border-bottom: 1px solid var(--keno-border);
+}
+
+.kenolab-home-content {
+    max-width: 800px;
+}
+
+.kenolab-home-content h1 {
+    color: var(--keno-white);
+
+    font-size: 3rem;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+}
+
+.kenolab-home-content p {
+    color: var(--keno-muted);
+
+    font-size: 1.15rem;
+    line-height: 1.7;
+
+    margin-bottom: 10px;
+}
+
+.kenolab-home-content strong {
+    color: var(--keno-purple-light);
+}
+
+#featured {
+    background-color: var(--keno-black) !important;
+}
+
+.featured-posts {
+    background-color: var(--keno-purple-800) !important;
+}
+
+
+.featured-posts .grid-item .content .link-title {
+    color: var(--keno-white) !important;
+}
+
+.featured-posts .grid-item .content .low-tab {
+    color: var(--keno-muted) !important;
+}
+
+@media (min-width: 767px) {
+
+    .featured-posts.featured-count-1 {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 480px !important;
+    }
+
+    .featured-posts.featured-count-1 .grid-item-1 {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        height: 480px !important;
+    }
+
+}
+
+@media (min-width: 767px) {
+
+    .featured-posts.featured-count-2 {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 430px !important;
+    }
+
+    .featured-posts.featured-count-2 .grid-item-1,
+    .featured-posts.featured-count-2 .grid-item-2 {
+        grid-column: auto !important;
+        grid-row: auto !important;
+
+        height: 430px !important;
+    }
+
+}
+
+.bg-offwhite {
+    background-color: var(--keno-purple-950) !important;
+}
+
+.section-title {
+    color: var(--keno-white) !important;
+
+    margin-bottom: 2rem;
+}
+
+.section-title a {
+    color: var(--keno-white) !important;
+}
+
+.section-title a:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+.suggestion {
+    background-color: var(--keno-purple-900) !important;
+
+    border-color: var(--keno-purple-800) !important;
+}
+
+
+/* Card title */
+
+.suggestion .content h3 a {
+    color: var(--keno-white) !important;
+}
+
+.suggestion .content h3 a:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+
+/* Date + reading time */
+
+.suggestion .content .date-time .date,
+.suggestion .content .date-time .time-to-read {
+    color: var(--keno-muted) !important;
+}
+
+
+/* Summary */
+
+.suggestion .content .summary a {
+    color: #ddd8e5 !important;
+}
+
+.suggestion .content .summary a:hover {
+    color: var(--keno-white) !important;
+}
+
+
+.tags .tag {
+    background-color: var(--keno-purple) !important;
+    color: white !important;
+}
+
+.tags .tag:hover {
+    background-color: var(--keno-purple-light) !important;
+    color: var(--keno-black) !important;
+}
+
+.blog-content {
+    background-color: var(--keno-purple-950) !important;
+    color: #e6e1eb !important;
+}
+
+
+/* Article title */
+
+.blog-content .title {
+    color: var(--keno-white) !important;
+}
+
+
+/* Article headings */
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    color: var(--keno-white) !important;
+}
+
+
+/* Article links */
+
+.blog-content a {
+    color: var(--keno-purple-light);
+}
+
+.blog-content a:hover {
+    color: var(--keno-purple-lighter);
+}
+
+
+/* Article metadata */
+
+.blog-content .date-time,
+.blog-content .date {
+    color: var(--keno-muted);
+}
+
+.blog-content .highlight pre {
+    background-color: #09060d !important;
+
+    border: 1px solid var(--keno-border);
+
+    color: var(--keno-white);
+}
+
+
+/* Inline code */
+
+.blog-content code:not(pre code) {
+    color: var(--keno-purple-lighter);
+
+    background-color: var(--keno-purple-800);
+
+    padding: 0.15rem 0.35rem;
+
+    border-radius: 4px;
+}
+
+.blog-content blockquote {
+    background-color: var(--keno-purple-900) !important;
+
+    border-left-color: var(--keno-purple) !important;
+
+    color: #ddd8e5;
+}
+
+.pagination .page-link {
+    background-color: var(--keno-purple-900);
+
+    border-color: var(--keno-border);
+
+    color: var(--keno-purple-light);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--keno-purple-800);
+
+    border-color: var(--keno-purple);
+
+    color: var(--keno-white);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--keno-purple);
+
+    border-color: var(--keno-purple);
+
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: var(--keno-purple-950);
+
+    border-color: var(--keno-border);
+
+    color: #665d70;
+}
+
+footer {
+    background-color: var(--keno-black) !important;
+
+    border-top: 1px solid var(--keno-border);
+}
+
+footer p {
+    color: var(--keno-muted) !important;
+}
+
+footer a {
+    color: var(--keno-purple-light) !important;
+}
+
+footer a:hover {
+    color: var(--keno-white) !important;
+}
+
+@media (max-width: 768px) {
+
+    .kenolab-home-intro {
+        padding: 45px 20px;
+    }
+
+    .kenolab-home-content h1 {
+        font-size: 2.2rem;
+    }
+
+}
+
+.article-authors {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin: 15px 0 20px;
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.article-author-avatar-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.article-author-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid var(--keno-purple-700);
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.article-author-avatar:hover {
+    border-color: var(--keno-purple-light);
+    transform: scale(1.05);
+}
+
+.article-author-info {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.2;
+}
+
+.article-author-label {
+    color: var(--keno-muted);
+
+    font-size: 0.75rem;
+}
+
+.article-author-name {
+    color: var(--keno-white);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.article-author-name:hover {
+    color: var(--keno-purple-light);
+}

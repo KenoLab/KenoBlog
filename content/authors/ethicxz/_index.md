@@ -1,7 +1,8 @@
 ---
 title: "ethicxz"
 description: "Kenolab Random"
+avatar: "avatar.png"
 github: "https://github.com/ethicxz"
-role: "larper"
-avatar: "cynthia.jpeg"
+linkedin: ""
+website: ""
 ---
