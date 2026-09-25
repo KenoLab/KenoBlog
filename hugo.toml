@@ -1,0 +1,100 @@
+baseURL = "https://wiki.kenolab.eu/"
+locale = "en-US"
+title = " KenoBlog"
+
+theme = "BlogRa"
+
+pluralizeListTitles = false
+summaryLength = 25
+
+disqusShortname = ""
+
+[params]
+    description = "KenoPlace for article talking about ; writeup, research and fun."
+    contactEmail = "kenolab.contact@proton.me"
+
+    footer = "© 2026 KenoBlog - Kenolab place for sharing and research"
+    googleSearch = ""
+    googleAnalytics = ""
+    adsense = ""
+
+    math = false
+    mermaid = false
+
+    facebook = ""
+    twitter = "https://x.com/kenolab_fr"
+    youtube = ""
+    instagram = ""
+    github = "https://github.com/KenoLab"
+    pinterest = ""
+    linkedin = "https://www.linkedin.com/company/kenolab"
+
+[taxonomies]
+    tag = "tags"
+    author = "authors"
+
+[menu]
+
+    [[menu.main]]
+        name = "Home"
+        url = "/"
+        weight = 1
+
+    [[menu.main]]
+        identifier = "blog"
+        name = "Blog"
+        weight = 2
+
+        [[menu.main]]
+            parent = "blog"
+            name = "Writeup"
+            url = "/blog/writeup/"
+            weight = 1
+
+        [[menu.main]]
+            parent = "blog"
+            name = "Fun"
+            url = "/blog/fun/"
+            weight = 2
+
+        [[menu.main]]
+            parent = "blog"
+            name = "R&D"
+            url = "/blog/R&D/"
+            weight = 3
+
+        [[menu.main]]
+            parent = "blog"
+            name = "divider"
+            weight = 4
+
+        [[menu.main]]
+            parent = "blog"
+            name = "Tags"
+            url = "/tags/"
+            weight = 5
+
+    [[menu.main]]
+        name = "Team"
+        url = "/team"
+        weight = 3
+
+    [[menu.main]]
+        name = "Contact"
+        url = "https://wiki.kenolab.eu"
+        weight = 30
+
+    [[menu.main]]
+        name = "Kenolab"
+        url = "https://www.kenolab.eu"
+        weight = 30
+
+[markup.goldmark.parser.attribute]
+    block = true
+
+[markup.goldmark.renderer]
+    unsafe = true
+
+[caches]
+    [caches.images]
+        dir = ':cacheDir/images'

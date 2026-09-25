@@ -1,0 +1,46 @@
+{{ with .Params.authors }}
+<div class="article-authors">
+    {{ range $author := . }}
+        {{ $authorPage := site.GetPage (printf "/authors/%s" ($author | urlize)) }}
+        <div class="article-author">
+            {{ with $authorPage }}
+                {{ with .Params.avatar }}
+                    {{ $avatar := $authorPage.Resources.GetMatch . }}
+                    {{ with $avatar }}
+                        <a
+                            href="{{ $authorPage.RelPermalink }}"
+                            class="article-author-avatar-link"
+                        >
+                            <img
+                                src="{{ .RelPermalink }}"
+                                alt="{{ $authorPage.Title }}"
+                                class="article-author-avatar"
+                            >
+                        </a>
+                    {{ end }}
+                {{ end }}
+                <div class="article-author-info">
+                    <span class="article-author-label">
+                        Written by
+                    </span>
+                    <a
+                        href="{{ $authorPage.RelPermalink }}"
+                        class="article-author-name"
+                    >
+                        {{ $authorPage.Title }}
+                    </a>
+                </div>
+            {{ else }}
+                <div class="article-author-info">
+                    <span class="article-author-label">
+                        Written by
+                    </span>
+                    <span class="article-author-name">
+                        {{ $author }}
+                    </span>
+                </div>
+            {{ end }}
+        </div>
+    {{ end }}
+</div>
+{{ end }}
