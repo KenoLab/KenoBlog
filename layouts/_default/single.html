@@ -1,65 +1,93 @@
 {{ define "main" }}
-
 <main class="blog-content">
     <div class="container-md">
         <div class="row">
-            <!-- <div class="col-lg-8 offset-lg-2 px-lg-4"> -->
+            <!-- Left advertisement -->
             <div class="col-lg-2 d-none d-xl-block">
                 <div class="ad-left-offset"></div>
-                {{ partial "ads.html" "ads/vertical-ad.js"}}
+                {{ partial "ads.html" "ads/vertical-ad.js" }}
             </div>
-
+            <!-- Article -->
             <div class="col-md-12 col-lg-8 px-lg-4">
                 {{ partial "ads.html" "ads/horizontal-ad.js" }}
-
-                <h1 class="title">{{ .Title }}</h1>
-
+                <!-- Title -->
+                <h1 class="title">
+                    {{ .Title }}
+                </h1>
+                <!-- Metadata -->
                 <div class="container-fluid px-0 mb-4">
                     <div class="row align-items-end">
-                        <div class="col-md-4 date-time">
+                        <div class="col-md-5 date-time">
                             {{ partial "authors.html" . }}
                             {{ partial "date.html" .Date }}
                             &centerdot;
-                            {{ partial "time-to-read.html" .}}
+                            {{ partial "time-to-read.html" . }}
                         </div>
-
-                        <div class="col-md-8 tags ">
+                        <div class="col-md-7 tags">
                             {{ range .Params.tags }}
-                            <a href="{{ (print "tags/" (. | urlize) | relURL) }}"><span
-                                    class="tag bg-dark">{{ . }}</span></a>
+                                <a href="{{ (print "tags/" (. | urlize) | relURL) }}">
+                                    <span class="tag bg-dark">
+                                        {{ . }}
+                                    </span>
+                                </a>
                             {{ end }}
                         </div>
                     </div>
                 </div>
-
-                {{ with .Page.Params.image }}
+                <!-- Cover image -->
+                {{ with .Params.image }}
                     {{ if or (hasPrefix . "http://") (hasPrefix . "https://") }}
                         <figure>
-                            <img id="cover-image" src={{ . }} alt="{{ $.Title }}">
+                            <img
+                                id="cover-image"
+                                src="{{ . }}"
+                                alt="{{ $.Title }}"
+                            >
                         </figure>
                     {{ else }}
-                        <figure>
-                            {{ $image := $.Page.Resources.GetMatch . }}
-                            <img id="cover-image" src={{ $image.RelPermalink }} alt="{{ $.Title }}">
-                        </figure>
+                        {{ with $.Page.Resources.GetMatch . }}
+                            <figure>
+                                <img
+                                    id="cover-image"
+                                    src="{{ .RelPermalink }}"
+                                    alt="{{ $.Title }}"
+                                >
+                            </figure>
+                        {{ end }}
                     {{ end }}
                 {{ end }}
-
+                <!--
+                    Mobile / Tablet TOC
+                    Hidden on XL screens because the sidebar TOC is used.
+                -->
+                {{ if ne .Params.toc false }}
+                    <div class="article-toc article-toc-mobile d-xl-none">
+                        <div class="article-toc-title">
+                            Table of contents
+                        </div>
+                        {{ .TableOfContents }}
+                    </div>
+                {{ end }}
+                <!-- Article content -->
                 {{ .Content }}
-
+                <!-- Share -->
                 {{ partial "social-media-share.html" . }}
-
                 {{ partial "ads.html" "ads/horizontal-ad.js" }}
                 <br>
                 {{ partial "disqus.html" . }}
             </div>
-
+            <!-- Desktop Table of Contents -->
             <div class="col-lg-2 d-none d-xl-block">
-                <div class="ad-right-offset"></div>
-                {{ partial "ads.html" "ads/vertical-ad.js"}}
+                {{ if ne .Params.toc false }}
+                    <aside class="article-toc-sidebar">
+                        <div class="article-toc-title">
+                            Table of contents
+                        </div>
+                        {{ .TableOfContents }}
+                    </aside>
+                {{ end }}
             </div>
         </div>
     </div>
 </main>
-
 {{ end }}

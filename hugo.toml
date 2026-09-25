@@ -1,4 +1,4 @@
-baseURL = "https://wiki.kenolab.eu/"
+baseURL = "https://blog.kenolab.eu/"
 locale = "en-US"
 title = " KenoBlog"
 

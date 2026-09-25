@@ -1,0 +1,38 @@
+{{ $username := .Get "author" }}
+{{ $authorPage := site.GetPage (printf "/authors/%s" ($username | urlize)) }}
+<div class="team-member">
+    {{ with $authorPage }}
+        <div class="team-member-header">
+            {{ with .Params.avatar }}
+                {{ $avatar := $authorPage.Resources.GetMatch . }}
+                {{ with $avatar }}
+                    <a
+                        href="{{ $authorPage.RelPermalink }}"
+                        class="team-member-avatar-link"
+                    >
+                        <img
+                            src="{{ .RelPermalink }}"
+                            alt="{{ $authorPage.Title }}"
+                            class="team-member-avatar"
+                        >
+                    </a>
+                {{ end }}
+            {{ end }}
+            <a
+                href="{{ $authorPage.RelPermalink }}"
+                class="team-member-name"
+            >
+                {{ $authorPage.Title }}
+            </a>
+        </div>
+    {{ else }}
+        <div class="team-member-header">
+            <span class="team-member-name">
+                {{ $username }}
+            </span>
+        </div>
+    {{ end }}
+    <div class="team-member-content">
+        {{ .Page.RenderString .Inner }}
+    </div>
+</div>
