@@ -1,0 +1,36 @@
+{{ define "main" }}
+
+<div class="kenolab-home-intro">
+    <div class="container-md">
+        <div class="kenolab-home-content">
+            <div class="error-code">404</div>
+            <h1>Page not found</h1>
+            <p>This page does not exist, or it has moved.</p>
+            <a class="error-home" href="{{ "/" | relURL }}">Back to the blog</a>
+        </div>
+    </div>
+</div>
+
+{{ $blogPosts := where .Site.RegularPages ".Section" "blog" }}
+
+{{ if gt (len $blogPosts) 0 }}
+
+<div class="bg-offwhite py-5">
+    <div class="container-md">
+
+        <h2 class="section-title">
+            Latest articles
+        </h2>
+
+        <div class="row">
+            {{ range first 3 $blogPosts.ByPublishDate.Reverse }}
+                {{ partial "suggestion.html" . }}
+            {{ end }}
+        </div>
+
+    </div>
+</div>
+
+{{ end }}
+
+{{ end }}

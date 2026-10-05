@@ -1,9 +1,10 @@
 {{ define "main" }}
+{{ $hasToc := and (ne .Params.toc false) .Fragments.Headings }}
 <main class="blog-content">
     <div class="container-md">
         <div class="row">
-            <!-- Left advertisement -->
-            <div class="col-lg-2 d-none d-xl-block">
+            <!-- Left advertisement (a narrower spacer when the TOC is shown, so the article sits more to the left) -->
+            <div class="{{ if $hasToc }}col-xl-1{{ else }}col-xl-2{{ end }} d-none d-xl-block">
                 <div class="ad-left-offset"></div>
                 {{ partial "ads.html" "ads/vertical-ad.js" }}
             </div>
@@ -60,8 +61,12 @@
                     Mobile / Tablet TOC
                     Hidden on XL screens because the sidebar TOC is used.
                 -->
-                {{ if ne .Params.toc false }}
-                    <div class="article-toc article-toc-mobile d-xl-none">
+                {{ if $hasToc }}
+                    <button type="button" class="toc-fab d-xl-none" aria-label="Table of contents"
+                        aria-expanded="false" aria-controls="toc-sheet">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <div id="toc-sheet" class="toc-sheet article-toc article-toc-mobile d-xl-none">
                         <div class="article-toc-title">
                             Table of contents
                         </div>
@@ -72,13 +77,43 @@
                 {{ .Content }}
                 <!-- Share -->
                 {{ partial "social-media-share.html" . }}
+                <!-- Previous / next article (oldest to newest across all blog posts) -->
+                {{ if eq .Section "blog" }}
+                    {{ $posts := (where .Site.RegularPages "Section" "blog").ByPublishDate }}
+                    {{ $prev := "" }}
+                    {{ $next := "" }}
+                    {{ range $i, $p := $posts }}
+                        {{ if eq $p.Permalink $.Permalink }}
+                            {{ if gt $i 0 }}{{ $prev = index $posts (sub $i 1) }}{{ end }}
+                            {{ if lt (add $i 1) (len $posts) }}{{ $next = index $posts (add $i 1) }}{{ end }}
+                        {{ end }}
+                    {{ end }}
+                    {{ if or $prev $next }}
+                        <nav class="post-nav" aria-label="More articles">
+                            {{ with $prev }}
+                                <a class="post-nav-link post-nav-prev" href="{{ .RelPermalink }}">
+                                    <span class="post-nav-label"><i class="fas fa-arrow-left"></i> Previous</span>
+                                    <span class="post-nav-title">{{ .Title }}</span>
+                                </a>
+                            {{ else }}
+                                <span></span>
+                            {{ end }}
+                            {{ with $next }}
+                                <a class="post-nav-link post-nav-next" href="{{ .RelPermalink }}">
+                                    <span class="post-nav-label">Next <i class="fas fa-arrow-right"></i></span>
+                                    <span class="post-nav-title">{{ .Title }}</span>
+                                </a>
+                            {{ end }}
+                        </nav>
+                    {{ end }}
+                {{ end }}
                 {{ partial "ads.html" "ads/horizontal-ad.js" }}
                 <br>
                 {{ partial "disqus.html" . }}
             </div>
             <!-- Desktop Table of Contents -->
-            <div class="col-lg-2 d-none d-xl-block">
-                {{ if ne .Params.toc false }}
+            <div class="{{ if $hasToc }}col-xl-3{{ else }}col-xl-2{{ end }} d-none d-xl-block">
+                {{ if $hasToc }}
                     <aside class="article-toc-sidebar">
                         <div class="article-toc-title">
                             Table of contents
@@ -90,4 +125,166 @@
         </div>
     </div>
 </main>
+
+<script>
+    // Add a header bar (language + copy button) to every code block in the article
+    (function () {
+        if (!navigator.clipboard) return;
+
+        document.querySelectorAll('.blog-content pre').forEach(function (pre) {
+            if (pre.classList.contains('mermaid')) return;
+
+            var host = pre.parentElement;
+            if (!host.classList.contains('highlight')) {
+                host = document.createElement('div');
+                pre.parentNode.insertBefore(host, pre);
+                host.appendChild(pre);
+            }
+            host.classList.add('code-host');
+
+            var code = pre.querySelector('code') || pre;
+            var match = /language-([\w+#-]+)/.exec(code.className);
+            var lang = code.getAttribute('data-lang') || (match && match[1]) || '';
+
+            var bar = document.createElement('div');
+            bar.className = 'code-bar';
+
+            var label = document.createElement('span');
+            label.className = 'code-lang';
+            label.textContent = lang;
+
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-code';
+            button.setAttribute('aria-label', 'Copy code to clipboard');
+            button.innerHTML = '<i class="fas fa-copy"></i>';
+
+            button.addEventListener('click', function () {
+                navigator.clipboard.writeText(code.innerText).then(function () {
+                    button.innerHTML = '<i class="fas fa-check"></i>';
+                    button.classList.add('copied');
+                    setTimeout(function () {
+                        button.innerHTML = '<i class="fas fa-copy"></i>';
+                        button.classList.remove('copied');
+                    }, 1500);
+                });
+            });
+
+            bar.appendChild(label);
+            bar.appendChild(button);
+            host.insertBefore(bar, pre);
+        });
+    })();
+</script>
+
+<script>
+    // Click an article image to view it full size
+    (function () {
+        var images = document.querySelectorAll('.blog-content img');
+        var overlay = null;
+        var full = null;
+
+        function close() {
+            if (!overlay) return;
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function open(src, alt) {
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'lightbox';
+                overlay.setAttribute('role', 'dialog');
+                overlay.setAttribute('aria-modal', 'true');
+                overlay.setAttribute('aria-label', 'Image viewer');
+                full = document.createElement('img');
+                overlay.appendChild(full);
+                overlay.addEventListener('click', close);
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') close();
+                });
+                document.body.appendChild(overlay);
+            }
+            full.src = src;
+            full.alt = alt || '';
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        images.forEach(function (img) {
+            // Leave linked images (avatars, badges) alone
+            if (img.closest('a')) return;
+
+            img.classList.add('zoomable');
+            img.addEventListener('click', function () {
+                open(img.currentSrc || img.src, img.alt);
+            });
+        });
+    })();
+</script>
+
+{{ if ne .Params.toc false }}
+<script>
+    // Highlight the current section in the table of contents (desktop sidebar and mobile panel)
+    (function () {
+        var links = document.querySelectorAll('.article-toc-sidebar #TableOfContents a, .toc-sheet #TableOfContents a');
+        if (!links.length) return;
+
+        var byId = {};
+        links.forEach(function (a) {
+            var id = decodeURIComponent(a.hash.slice(1));
+            (byId[id] = byId[id] || []).push(a);
+        });
+
+        var headings = Array.prototype.filter.call(
+            document.querySelectorAll('.blog-content h2[id], .blog-content h3[id], .blog-content h4[id]'),
+            function (h) { return byId[h.id]; }
+        );
+        if (!headings.length) return;
+
+        var current = null;
+        function update() {
+            var active = headings[0];
+            headings.forEach(function (h) {
+                if (h.getBoundingClientRect().top <= 120) active = h;
+            });
+            if (active === current) return;
+            current = active;
+            links.forEach(function (a) { a.classList.remove('active'); });
+            byId[active.id].forEach(function (a) { a.classList.add('active'); });
+        }
+
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+</script>
+
+<script>
+    // Mobile table of contents: floating button that opens a panel
+    (function () {
+        var fab = document.querySelector('.toc-fab');
+        var sheet = document.querySelector('.toc-sheet');
+        if (!fab || !sheet) return;
+
+        function setOpen(open) {
+            sheet.classList.toggle('open', open);
+            fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+            fab.innerHTML = open ? '<i class="fas fa-times"></i>' : '<i class="fas fa-list"></i>';
+        }
+
+        fab.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setOpen(!sheet.classList.contains('open'));
+        });
+        sheet.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (e.target.closest('a')) setOpen(false);
+        });
+        document.addEventListener('click', function () { setOpen(false); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setOpen(false);
+        });
+    })();
+</script>
+{{ end }}
 {{ end }}

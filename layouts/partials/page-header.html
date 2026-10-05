@@ -1,0 +1,51 @@
+<header id="header">
+  <div class="container-md">
+    <nav class="navbar navbar-expand-sm navbar-dark header-bar">
+      <a class="header-brand" href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {{ range .Site.Menus.main }}
+          {{ if .HasChildren }}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              {{ .Name }}
+            </a>
+            <div class="dropdown-menu">
+              {{ range .Children }}
+              {{ if eq .Name "divider" }}
+                <div class="dropdown-divider"></div>
+              {{ else }}
+                <a class="dropdown-item" href="{{ .URL }}">
+                  {{ with .Params.icon }}<span class="dropdown-icon"><i class="fas {{ . }}"></i></span>{{ end }}
+                  <span class="dropdown-text">
+                    <span class="dropdown-title">{{ .Name }}</span>
+                    {{ with .Params.description }}<span class="dropdown-desc">{{ . }}</span>{{ end }}
+                  </span>
+                </a>
+              {{ end }}
+              {{ end }}
+            </div>
+          </li>
+          {{ else }}
+          <li class="nav-item">
+            <a class="nav-link {{ if eq .URL $.RelPermalink }}active{{ end }}" href="{{ .URL }}">
+              {{ .Name }}
+            </a>
+          </li>
+          {{ end }}
+          {{ end }}
+        </ul>
+
+        <div class="header-social">
+          {{ partial "social-media-presence.html" . }}
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

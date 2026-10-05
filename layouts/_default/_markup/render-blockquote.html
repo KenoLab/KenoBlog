@@ -1,0 +1,13 @@
+{{- /* Plain blockquotes render as usual. GitHub-style alerts (> [!NOTE], > [!TIP], > [!IMPORTANT], > [!WARNING], > [!CAUTION]) become callouts with an icon. */ -}}
+{{- if eq .Type "alert" -}}
+    {{- $icons := dict "note" "fa-info-circle" "tip" "fa-lightbulb" "important" "fa-exclamation-circle" "warning" "fa-exclamation-triangle" "caution" "fa-times-circle" -}}
+    {{- $icon := index $icons .AlertType | default "fa-info-circle" -}}
+<div class="callout callout-{{ .AlertType }}">
+    <p class="callout-title"><i class="fas {{ $icon }}"></i> {{ with .AlertTitle }}{{ . }}{{ else }}{{ .AlertType | title }}{{ end }}</p>
+    {{ .Text }}
+</div>
+{{- else -}}
+<blockquote>
+    {{ .Text }}
+</blockquote>
+{{- end }}

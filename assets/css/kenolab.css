@@ -1,0 +1,1496 @@
+/* ==========================================================================
+   KenoBlog theme (matches kenolab.eu), layered on top of the BlogRa theme.
+
+   Sections:
+   1. Tokens
+   2. Fonts
+   3. Base
+   4. Header
+   5. Home hero
+   6. Cards, tags, section titles, pagination
+   7. Article (page, glow, code, tables, callouts, TOC, extras)
+   8. Team
+   9. Footer
+   10. 404
+   11. Accessibility
+   ========================================================================== */
+
+
+/* 1. Tokens ---------------------------------------------------------------- */
+
+:root {
+    --keno-black: #0d0718;
+
+    --keno-purple-950: #0d0718;
+    --keno-purple-900: #170d21;
+    --keno-purple-800: #241333;
+    --keno-purple-700: #382052;
+
+    --keno-purple: #a855f7;
+    --keno-purple-light: #b66cf8;
+    --keno-purple-lighter: #f5f3ff;
+
+    --keno-white: #f8f7fb;
+    --keno-muted: #aaa3b5;
+
+    --keno-border: rgba(255, 255, 255, 0.1);
+    --keno-card: #18181b;
+    --keno-radius: 16px;
+
+    /* Minimum header height. The hero grid and the page glows reach up by this much. */
+    --header-h: 72px;
+}
+
+
+/* 2. Fonts ----------------------------------------------------------------- */
+
+@font-face {
+    font-family: "Brewla";
+    src: url("/fonts/PtgBrewlaRegular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Self-hosted variable fonts (Latin + Latin Extended) */
+
+@font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter-latin.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter-latin-ext.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    src: url("/fonts/GeistMono-latin.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    src: url("/fonts/GeistMono-latin-ext.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+
+/* 3. Base ------------------------------------------------------------------ */
+
+html,
+body {
+    background-color: var(--keno-black);
+    color: var(--keno-white);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Let the page content grow so the footer always sits at the very bottom */
+body > main,
+body > .bg-offwhite {
+    flex: 1 0 auto;
+}
+
+a {
+    color: var(--keno-purple-light);
+}
+
+a:hover {
+    color: var(--keno-purple-lighter);
+}
+
+h1, h2, h3,
+#header .header-brand,
+.kenolab-home-content h1,
+.section-title,
+.blog-content .title {
+    font-family: "Brewla", "Inter", serif;
+    letter-spacing: 0.01em;
+}
+
+code, pre, kbd {
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+::selection {
+    background: rgba(168, 85, 247, 0.4);
+    color: #fff;
+}
+
+/* Scrollbars: thin, purple thumb on a transparent track (page, code blocks, tables, panels) */
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 85, 247, 0.45) transparent;
+}
+
+/* Older Safari and Chrome, which don't support the standard properties above */
+@supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--keno-black);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--keno-purple-700);
+        border: 2px solid var(--keno-black);
+        border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--keno-purple);
+    }
+}
+
+.bg-offwhite {
+    background-color: var(--keno-purple-950) !important;
+}
+
+/* Keep the section content above the hero grid that reaches into it */
+.bg-offwhite .container-md {
+    position: relative;
+}
+
+
+/* 4. Header ---------------------------------------------------------------- */
+
+#header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-sizing: border-box;
+    min-height: var(--header-h);
+    padding-top: 0;
+    background-color: rgba(13, 7, 24, 0.55) !important;
+    border-bottom: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    text-align: left;
+}
+
+#header .header-bar {
+    min-height: var(--header-h);
+    padding: 0;
+}
+
+/* Brand: logo + blog title */
+
+#header .header-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.75rem;
+    color: var(--keno-white);
+    text-decoration: none;
+}
+
+#header .header-brand:hover {
+    color: var(--keno-white);
+}
+
+#header .header-brand::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    position: relative;
+    top: -0.15em; /* Brewla glyphs sit high in the line box */
+    background: url("/img/kenolab-logo.png") center / contain no-repeat;
+}
+
+/* Links */
+
+#header nav .navbar-nav {
+    gap: 0.25rem;
+}
+
+#header nav .navbar-nav > li {
+    padding: 0;
+}
+
+#header .nav-link {
+    padding: 0.5rem 0.9rem;
+    color: #d1d5db !important;
+    transition: color 0.2s ease;
+}
+
+#header .nav-link:hover,
+#header .nav-link:focus {
+    color: var(--keno-purple-light) !important;
+}
+
+/* Dropdown chevron: replaces Bootstrap's solid triangle, flips while the menu is open */
+
+#header .dropdown-toggle::after {
+    width: 6px;
+    height: 6px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    border-top: 0;
+    border-left: 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.2s ease;
+}
+
+#header .dropdown-toggle.show::after {
+    transform: translateY(2px) rotate(225deg);
+}
+
+/* Social icons */
+
+#header nav .header-social ul {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 0 1.25rem;
+    padding: 0;
+    list-style: none;
+}
+
+#header nav .header-social li {
+    padding: 0;
+    margin: 0;
+}
+
+#header .header-social a {
+    color: #d1d5db;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+#header .header-social a:hover {
+    color: #fff;
+}
+
+/* Blog submenu */
+
+#header .dropdown-menu {
+    min-width: 15rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem;
+    background-color: #1b1228 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Tooltip arrow pointing at the toggle */
+#header .dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    background-color: #1b1228;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 3px;
+    transform: rotate(45deg);
+}
+
+#header .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 10px;
+    color: #d1d5db !important;
+    white-space: normal;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+#header .dropdown-item:hover,
+#header .dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: #fff !important;
+}
+
+/* Icon tile + title and description (set per entry in hugo.toml: params.icon and params.description) */
+
+#header .dropdown-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 8px;
+    background-color: rgba(168, 85, 247, 0.15);
+    color: var(--keno-purple-light);
+    font-size: 0.8rem;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+#header .dropdown-item:hover .dropdown-icon,
+#header .dropdown-item:focus .dropdown-icon {
+    background-color: rgba(168, 85, 247, 0.3);
+    color: #fff;
+}
+
+#header .dropdown-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+#header .dropdown-title {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#header .dropdown-desc {
+    margin-top: 0.05rem;
+    color: var(--keno-muted);
+    font-size: 0.74rem;
+}
+
+#header .dropdown-divider {
+    margin: 0.4rem 0.5rem;
+    border-color: var(--keno-border) !important;
+}
+
+/* Center the menu under its toggle (the mobile menu is static and full width) */
+@media (min-width: 576px) {
+    #header .dropdown-menu {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 575.98px) {
+    #header nav .header-social ul {
+        margin: 0.5rem 0 0.75rem 0.9rem;
+    }
+
+    /* Same compact card as desktop, aligned with the link text (no arrow: it isn't floating) */
+    #header .dropdown-menu {
+        width: fit-content;
+        margin: 0.25rem 0 0.75rem 0.9rem;
+    }
+
+    #header .dropdown-menu::before {
+        display: none;
+    }
+}
+
+
+/* 5. Home hero ------------------------------------------------------------- */
+
+.kenolab-home-intro {
+    position: relative;
+    isolation: isolate;
+    padding: 110px 0 90px;
+    background: var(--keno-black);
+}
+
+/* Purple glow, reaching up behind the sticky header */
+.kenolab-home-intro::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--header-h)) 0 0 0;
+    z-index: -1;
+    background:
+        radial-gradient(70% 45% at 50% var(--header-h), rgba(147, 51, 234, 0.4), transparent),
+        radial-gradient(45% 30% at 15% 55%, rgba(139, 92, 246, 0.3), transparent),
+        radial-gradient(45% 30% at 85% 40%, rgba(192, 38, 211, 0.25), transparent);
+    -webkit-mask-image: linear-gradient(#000 70%, transparent);
+    mask-image: linear-gradient(#000 70%, transparent);
+}
+
+/* Faint grid, also reaching up behind the header and down into the next section */
+.kenolab-home-intro::after {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--header-h)) 0 -220px 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 48px 48px;
+    -webkit-mask-image: linear-gradient(#000 50%, transparent 100%);
+    mask-image: linear-gradient(#000 50%, transparent 100%);
+}
+
+.kenolab-home-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.kenolab-home-content h1 {
+    color: var(--keno-white);
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.kenolab-home-content p {
+    color: #cbd5e1;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.kenolab-home-content strong {
+    color: var(--keno-purple-light);
+}
+
+@media (max-width: 768px) {
+    .kenolab-home-intro {
+        padding: 70px 20px 55px;
+    }
+}
+
+
+/* 6. Cards, tags, section titles, pagination ------------------------------- */
+
+.section-title {
+    color: var(--keno-white) !important;
+    margin-bottom: 2rem;
+}
+
+.section-title a {
+    color: var(--keno-white) !important;
+}
+
+.section-title a:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+/* Cards
+   The theme builds the gutter with a thick border on .suggestion, so keep a
+   transparent border for spacing and draw the visible edge with ::after. */
+
+.suggestion {
+    position: relative;
+    background-color: var(--keno-card) !important;
+    background-clip: padding-box;
+    border: 0.6rem solid transparent !important;
+    border-radius: calc(var(--keno-radius) + 0.6rem);
+    overflow: hidden;
+    transition:
+        filter 0.3s ease,
+        transform 0.3s ease;
+}
+
+.suggestion::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: var(--keno-radius);
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+}
+
+.suggestion:hover {
+    filter: drop-shadow(0 10px 20px rgba(168, 85, 247, 0.18));
+    transform: translateY(-3px);
+}
+
+.suggestion:hover::after {
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+/* The image fades into the card just above the title */
+.suggestion img {
+    transition: transform 0.4s ease;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent 100%);
+    mask-image: linear-gradient(#000 55%, transparent 100%);
+}
+
+.suggestion:hover img {
+    transform: scale(1.04);
+}
+
+.suggestion .content h3 a {
+    color: var(--keno-white) !important;
+}
+
+.suggestion .content h3 a:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+.suggestion .content .date-time .date,
+.suggestion .content .date-time .time-to-read {
+    color: var(--keno-muted) !important;
+}
+
+.suggestion .content .summary a {
+    color: #ddd8e5 !important;
+}
+
+.suggestion .content .summary a:hover {
+    color: var(--keno-white) !important;
+}
+
+/* Tags as pills */
+
+.tags .tag {
+    background-color: rgba(168, 85, 247, 0.15) !important;
+    color: var(--keno-purple-light) !important;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.tags .tag:hover {
+    background-color: var(--keno-purple) !important;
+    border-color: var(--keno-purple);
+    color: #fff !important;
+}
+
+/* Pagination */
+
+.pagination .page-link {
+    margin: 0 3px;
+    background-color: var(--keno-purple-900);
+    border-color: var(--keno-border);
+    border-radius: 10px !important;
+    color: var(--keno-purple-light);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--keno-purple-800);
+    border-color: var(--keno-purple);
+    color: var(--keno-white);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--keno-purple);
+    border-color: var(--keno-purple);
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: var(--keno-purple-950);
+    border-color: var(--keno-border);
+    color: #665d70;
+}
+
+
+/* 7. Article --------------------------------------------------------------- */
+
+.blog-content {
+    background-color: var(--keno-purple-950) !important;
+    color: #e6e1eb !important;
+    font-family: inherit;
+    line-height: 1.8;
+}
+
+.blog-content,
+main.bg-offwhite {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Soft purple glow behind the page title (articles and list pages), reaching up behind the header */
+.blog-content::before,
+main.bg-offwhite::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--header-h));
+    left: 0;
+    right: 0;
+    height: calc(520px + var(--header-h));
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(60% 70% at 50% 60px, rgba(147, 51, 234, 0.3), transparent),
+        radial-gradient(35% 50% at 10% 140px, rgba(139, 92, 246, 0.15), transparent),
+        radial-gradient(35% 50% at 90% 120px, rgba(192, 38, 211, 0.12), transparent);
+    -webkit-mask-image: linear-gradient(#000 40%, transparent 100%);
+    mask-image: linear-gradient(#000 40%, transparent 100%);
+}
+
+.blog-content .title {
+    color: var(--keno-white) !important;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    color: var(--keno-white) !important;
+}
+
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+    scroll-margin-top: 90px;
+}
+
+.blog-content a {
+    color: var(--keno-purple-light);
+}
+
+.blog-content a:hover {
+    color: var(--keno-purple-lighter);
+}
+
+.blog-content .date-time,
+.blog-content .date {
+    color: var(--keno-muted);
+}
+
+/* Rounded article images; avatars keep their own round shape */
+.blog-content img:not(.team-member-avatar):not(.article-author-avatar) {
+    border-radius: 12px;
+}
+
+.blog-content blockquote {
+    background-color: var(--keno-purple-900) !important;
+    border-left-color: var(--keno-purple) !important;
+    border-radius: 0 12px 12px 0;
+    color: #ddd8e5;
+}
+
+/* Inline code */
+
+.blog-content code:not(pre code) {
+    padding: 0.15rem 0.35rem;
+    background-color: var(--keno-purple-800);
+    border: 1px solid var(--keno-border);
+    border-radius: 6px;
+    color: var(--keno-purple-lighter);
+}
+
+/* Every code block: fenced with a language (.highlight pre) or without (bare pre) */
+
+.blog-content .highlight pre,
+.blog-content pre {
+    padding: 1rem 1.25rem;
+    background-color: #09060f !important;
+    border: 1px solid var(--keno-border);
+    border-radius: 12px;
+    color: var(--keno-white);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.blog-content pre code {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+}
+
+/* Code block header bar: language label + copy button (added by the script in single.html).
+   Without JS the blocks keep the plain look above. */
+
+.blog-content .code-host {
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--keno-border);
+    border-radius: 12px;
+    background-color: #09060f;
+    overflow: hidden;
+}
+
+.blog-content .code-host pre {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.code-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.5rem;
+    padding: 0.35rem 0.6rem 0.35rem 1.25rem;
+    border-bottom: 1px solid var(--keno-border);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.code-lang {
+    color: var(--keno-muted);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.copy-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--keno-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.copy-code:hover,
+.copy-code:focus-visible {
+    background-color: rgba(168, 85, 247, 0.18);
+    color: #fff;
+}
+
+.copy-code.copied {
+    border-color: rgba(74, 222, 128, 0.4);
+    background-color: rgba(74, 222, 128, 0.12);
+    color: #4ade80;
+}
+
+/* No focus outline after a mouse click (keyboard focus keeps its outline) */
+.copy-code:focus:not(:focus-visible),
+.blog-content pre:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.copy-code::-moz-focus-inner {
+    border: 0;
+}
+
+/* Tables */
+
+.blog-content table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    border: 1px solid var(--keno-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+.blog-content th,
+.blog-content td {
+    padding: 0.65rem 1rem;
+    border-top: 1px solid var(--keno-border);
+    vertical-align: top;
+}
+
+.blog-content thead th {
+    border-top: 0;
+    border-bottom: 1px solid var(--keno-border);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--keno-white);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.blog-content tbody tr:first-child td {
+    border-top: 0;
+}
+
+.blog-content tbody tr:hover td {
+    background-color: rgba(168, 85, 247, 0.07);
+}
+
+/* Callouts (> [!NOTE], > [!TIP], ...) */
+
+.blog-content .callout {
+    --callout-color: #60a5fa;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--callout-color) 35%, transparent);
+    border-left: 4px solid var(--callout-color);
+    border-radius: 12px;
+    background-color: color-mix(in srgb, var(--callout-color) 10%, transparent);
+}
+
+.blog-content .callout > :last-child {
+    margin-bottom: 0;
+}
+
+.blog-content .callout-title {
+    margin-bottom: 0.5rem;
+    color: var(--callout-color);
+    font-weight: 700;
+}
+
+.blog-content .callout-title i {
+    margin-right: 0.35rem;
+}
+
+.blog-content .callout-note {
+    --callout-color: #60a5fa;
+}
+
+.blog-content .callout-tip {
+    --callout-color: #4ade80;
+}
+
+.blog-content .callout-important {
+    --callout-color: #c084fc;
+}
+
+.blog-content .callout-warning {
+    --callout-color: #fbbf24;
+}
+
+.blog-content .callout-caution {
+    --callout-color: #f87171;
+}
+
+/* Heading anchor links */
+
+.heading-anchor {
+    margin-left: 0.5rem;
+    color: var(--keno-purple-light);
+    font-weight: 400;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.blog-content h2:hover .heading-anchor,
+.blog-content h3:hover .heading-anchor,
+.blog-content h4:hover .heading-anchor,
+.heading-anchor:focus-visible {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .heading-anchor {
+        opacity: 0.4;
+    }
+}
+
+/* Click-to-zoom images */
+
+.blog-content img.zoomable {
+    cursor: zoom-in;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgba(5, 3, 10, 0.92);
+    cursor: zoom-out;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.lightbox.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+/* Authors */
+
+.article-authors {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 15px 0 20px;
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.article-author-avatar-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.article-author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--keno-purple-700);
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.article-author-avatar:hover {
+    border-color: var(--keno-purple-light);
+    transform: scale(1.05);
+}
+
+.article-author-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.article-author-label {
+    color: var(--keno-muted);
+    font-size: 0.75rem;
+}
+
+.article-author-name {
+    color: var(--keno-white);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.article-author-name:hover {
+    color: var(--keno-purple-light);
+}
+
+/* Table of contents: minimal docs style */
+
+.article-toc-title {
+    color: var(--keno-white);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.article-toc-sidebar {
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    margin-top: 40px;
+    padding: 0;
+    border-left: 0;
+}
+
+.article-toc-sidebar #TableOfContents {
+    border-left: 1px solid var(--keno-border);
+}
+
+.article-toc-sidebar #TableOfContents ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+.article-toc-sidebar #TableOfContents ul ul {
+    margin-top: 0;
+    padding-left: 12px;
+}
+
+.article-toc-sidebar #TableOfContents li {
+    margin: 0;
+    line-height: 1.35;
+}
+
+.article-toc-sidebar #TableOfContents a {
+    display: block;
+    margin-left: -1px;
+    padding: 5px 0 5px 14px;
+    border-left: 2px solid transparent;
+    color: var(--keno-muted);
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.article-toc-sidebar #TableOfContents a:hover {
+    color: #fff;
+}
+
+.article-toc-sidebar #TableOfContents a.active {
+    color: var(--keno-purple-light);
+    border-left-color: var(--keno-purple);
+}
+
+/* Small scrollbar */
+
+.article-toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.article-toc-sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--keno-purple-700);
+    border-radius: 4px;
+}
+
+/* Mobile / tablet: a round button fixed to the bottom-right corner that opens the
+   table of contents as a panel on its left (script at the bottom of single.html). */
+
+.toc-fab {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    background-color: #1b1228;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    color: #d1d5db;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.toc-fab:hover,
+.toc-fab[aria-expanded="true"] {
+    border-color: rgba(168, 85, 247, 0.5);
+    background-color: #2a1a40;
+    color: #fff;
+}
+
+.article-toc-mobile {
+    position: fixed;
+    right: calc(1rem + 46px + 0.5rem);
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    width: min(22rem, calc(100vw - 5.5rem));
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 1rem 1.1rem;
+    background-color: #1b1228;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    transform-origin: bottom right;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.96) translateX(8px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.article-toc-mobile.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.article-toc-mobile #TableOfContents ul {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.article-toc-mobile #TableOfContents ul ul {
+    padding-left: 18px;
+}
+
+.article-toc-mobile #TableOfContents li {
+    margin: 4px 0;
+}
+
+.article-toc-mobile #TableOfContents a {
+    color: var(--keno-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.article-toc-mobile #TableOfContents a:hover {
+    color: #fff;
+}
+
+.article-toc-mobile #TableOfContents a.active {
+    color: var(--keno-purple-light);
+}
+
+/* Heading hierarchy: top level bold and bright, nested levels lighter */
+
+.article-toc-sidebar #TableOfContents > ul > li > a,
+.article-toc-mobile #TableOfContents > ul > li > a {
+    color: #e5e7eb;
+    font-weight: 700;
+}
+
+.article-toc-sidebar #TableOfContents ul ul a,
+.article-toc-mobile #TableOfContents ul ul a {
+    color: var(--keno-muted);
+    font-weight: 400;
+}
+
+/* Share buttons */
+
+#social-media-share .share-title {
+    margin-bottom: 1rem;
+    color: var(--keno-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+#social-media-share .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+#social-media-share .share-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--keno-border);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #d1d5db;
+    font-size: 1.25rem;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#social-media-share .share-buttons a:hover {
+    background-color: rgba(168, 85, 247, 0.18);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Previous / next article */
+
+.post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2.5rem 0 1rem;
+}
+
+.blog-content .post-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--keno-border);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--keno-white);
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.blog-content .post-nav-link:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    background-color: rgba(168, 85, 247, 0.1);
+    color: var(--keno-white);
+}
+
+.post-nav-next {
+    grid-column: 2;
+    text-align: right;
+}
+
+.post-nav-label {
+    color: var(--keno-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.post-nav-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+@media (max-width: 575.98px) {
+    .post-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .post-nav-next {
+        grid-column: auto;
+    }
+
+    .post-nav > span:empty {
+        display: none;
+    }
+}
+
+
+/* 8. Team ------------------------------------------------------------------ */
+
+.team-member {
+    margin: 30px 0 40px;
+}
+
+/* Header containing avatar + username */
+
+.team-member-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.team-member-avatar-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.team-member-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--keno-purple-700);
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.team-member-avatar:hover {
+    border-color: var(--keno-purple-light);
+    transform: scale(1.05);
+}
+
+.team-member-name {
+    color: var(--keno-white) !important;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.team-member-name:hover {
+    color: var(--keno-purple-light) !important;
+}
+
+.team-member-content {
+    color: #e6e1eb;
+}
+
+.team-member-content p {
+    margin-bottom: 14px;
+}
+
+.team-member-content ul {
+    margin-bottom: 0;
+}
+
+/* Link icons (parameters of the team-member shortcode) */
+
+.team-member-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.blog-content .team-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--keno-border);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #d1d5db;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.blog-content .team-link svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+}
+
+.blog-content .team-link:hover {
+    background-color: rgba(168, 85, 247, 0.18);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .team-member-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .team-member-name {
+        font-size: 1.3rem;
+    }
+}
+
+
+/* 9. Footer ---------------------------------------------------------------- */
+
+footer {
+    background: linear-gradient(
+        to bottom,
+        var(--keno-purple-950),
+        var(--keno-purple-900)
+    ) !important;
+    border-top: 0 !important;
+    padding-top: 7rem !important; /* taller footer gives the fade more room */
+}
+
+footer p {
+    color: var(--keno-muted) !important;
+}
+
+footer a {
+    color: var(--keno-purple-light) !important;
+}
+
+footer a:hover {
+    color: var(--keno-white) !important;
+}
+
+
+/* 10. 404 ------------------------------------------------------------------ */
+
+.error-code {
+    margin-bottom: 0.5rem;
+    color: var(--keno-purple-light);
+    font-family: "Brewla", "Inter", serif;
+    font-size: clamp(5rem, 18vw, 9rem);
+    line-height: 1;
+}
+
+.error-home {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    border-radius: 999px;
+    background-color: rgba(168, 85, 247, 0.18);
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.error-home:hover {
+    background-color: rgba(168, 85, 247, 0.32);
+    color: #fff;
+}
+
+
+/* 11. Accessibility -------------------------------------------------------- */
+
+/* Visible keyboard focus everywhere (mouse clicks don't trigger it) */
+:focus-visible {
+    outline: 2px solid var(--keno-purple-light);
+    outline-offset: 2px;
+}
+
+/* No outline after a mouse click or tap, on any button or link (keyboard focus keeps its outline) */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+}
+
+button,
+.toc-fab {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Respect "reduce motion": no transitions, no hover movement */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .suggestion:hover,
+    .suggestion:hover img,
+    #social-media-share .share-buttons a:hover,
+    .blog-content .team-link:hover,
+    .article-author-avatar:hover,
+    .team-member-avatar:hover {
+        transform: none;
+    }
+}

@@ -51,17 +51,29 @@ disqusShortname = ""
             url = "/blog/writeup/"
             weight = 1
 
+            [menu.main.params]
+                description = "Lab and CTF solutions"
+                icon = "fa-flag-checkered"
+
         [[menu.main]]
             parent = "blog"
             name = "Fun"
             url = "/blog/fun/"
             weight = 2
 
+            [menu.main.params]
+                description = "Tech and other questionable ideas"
+                icon = "fa-ghost"
+
         [[menu.main]]
             parent = "blog"
             name = "R&D"
             url = "/blog/R&D/"
             weight = 3
+
+            [menu.main.params]
+                description = "Research from the Kenolab team"
+                icon = "fa-flask"
 
         [[menu.main]]
             parent = "blog"
@@ -73,6 +85,10 @@ disqusShortname = ""
             name = "Tags"
             url = "/tags/"
             weight = 5
+
+            [menu.main.params]
+                description = "Browse articles by topic"
+                icon = "fa-tags"
 
     [[menu.main]]
         name = "Team"
@@ -94,6 +110,12 @@ disqusShortname = ""
 
 [markup.goldmark.renderer]
     unsafe = true
+
+[markup.goldmark.extensions]
+    table = true
+
+[markup.highlight]
+    style = "dracula"
 
 [caches]
     [caches.images]

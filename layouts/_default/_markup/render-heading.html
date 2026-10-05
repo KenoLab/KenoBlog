@@ -1,0 +1,9 @@
+{{- /* Same output as Hugo's default heading, plus a "#" link to the section on h2 to h4. */ -}}
+<h{{ .Level }} id="{{ .Anchor }}"
+    {{- range $k, $v := .Attributes }}{{ if ne $k "id" }} {{ printf "%s=%q" $k $v | safeHTMLAttr }}{{ end }}{{ end -}}
+>
+    {{- .Text | safeHTML -}}
+    {{- if and (ge .Level 2) (le .Level 4) -}}
+        <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="Link to this section">#</a>
+    {{- end -}}
+</h{{ .Level }}>
