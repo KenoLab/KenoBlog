@@ -96,7 +96,7 @@ disqusShortname = ""
         weight = 3
 
     [[menu.main]]
-        name = "Contact"
+        name = "Wiki"
         url = "https://wiki.kenolab.eu"
         weight = 30
 
