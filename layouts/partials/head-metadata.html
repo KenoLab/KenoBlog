@@ -16,7 +16,7 @@
 {{ $style := resources.Get "main.scss" | toCSS | minify }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 <link rel="preload" href="{{ "fonts/Inter-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{{ "fonts/PtgBrewlaRegular.woff" | relURL }}" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="{{ "fonts/Adumu.ttf" | relURL }}" as="font" type="font/ttf" crossorigin>
 {{ $custom := resources.Get "css/kenolab.css" | fingerprint }}
 <link rel="stylesheet" href="{{ $custom.RelPermalink }}">
 
