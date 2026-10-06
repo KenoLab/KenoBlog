@@ -648,6 +648,7 @@ main.bg-offwhite::before {
 }
 
 .blog-content .title {
+    margin-top: 3.5rem;
     color: var(--keno-white) !important;
 }
 
