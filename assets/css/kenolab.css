@@ -944,6 +944,29 @@ main.bg-offwhite::before {
     object-fit: contain;
 }
 
+/* Article metadata: authors, then tags across the full width, then date */
+
+.blog-content .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    /* Two rows of tags at most; the rest are hidden */
+    max-height: calc(2 * (1.6rem + 2px) + 8px);
+    overflow: hidden;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.blog-content .article-tags .tag {
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.blog-content .article-tags a {
+    text-decoration: none;
+}
+
 /* Authors */
 
 .article-authors {
@@ -951,13 +974,13 @@ main.bg-offwhite::before {
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    margin: 15px 0 20px;
+    margin: 28px 0 20px;
 }
 
 .article-author {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
 }
 
 .article-author-avatar-link {
@@ -966,8 +989,8 @@ main.bg-offwhite::before {
 }
 
 .article-author-avatar {
-    width: 42px;
-    height: 42px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--keno-purple-700);
@@ -989,12 +1012,12 @@ main.bg-offwhite::before {
 
 .article-author-label {
     color: var(--keno-muted);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
 }
 
 .article-author-name {
     color: var(--keno-white);
-    font-size: 0.95rem;
+    font-size: 1.15rem;
     font-weight: 600;
     text-decoration: none;
 }
