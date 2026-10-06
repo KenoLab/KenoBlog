@@ -10,7 +10,7 @@ summaryLength = 25
 disqusShortname = ""
 
 [params]
-    description = "KenoPlace for article talking about ; writeup, research and fun."
+    description = "Kenolab's articles about research, writeups and the topics we are passionate about."
     images = ["image/cover.png"]
     contactEmail = "kenolab.contact@proton.me"
 
