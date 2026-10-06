@@ -5,7 +5,7 @@ draft: false
 toc: false
 ---
 
-KenoLab is built and maintained by cybersecurity enthusiasts who enjoy building labs, researching new techniques, creating challenges, and sharing knowledge with the community.
+Kenolab is built and maintained by cybersecurity enthusiasts who enjoy building labs, researching new techniques, creating challenges, and sharing knowledge with the community.
 
 ---
 

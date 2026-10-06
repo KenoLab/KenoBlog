@@ -1,4 +1,4 @@
 ---
 title: "Writeup"
-description: "Writeups from the KenoLab team."
+description: "Writeups from the Kenolab team."
 ---

@@ -1,4 +1,4 @@
 ---
 title: "R&D"
-description: "Research and development from the KenoLab team."
+description: "Research and development from the Kenolab team."
 ---
