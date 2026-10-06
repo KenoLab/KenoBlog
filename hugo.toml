@@ -11,6 +11,7 @@ disqusShortname = ""
 
 [params]
     description = "KenoPlace for article talking about ; writeup, research and fun."
+    images = ["image/cover.png"]
     contactEmail = "kenolab.contact@proton.me"
 
     footer = "© 2026 KenoBlog - Kenolab place for sharing and research"
