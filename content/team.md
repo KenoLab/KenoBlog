@@ -22,3 +22,12 @@ Currently working on SOC level 3. Passionate about Active Directory stuff and De
 babyfoot player.
 
 {{< /team-member >}}
+
+---
+
+ {{< team-member author="f4doli" >}}
+<img src="/img/hello.gif" alt="goaaaaat" style="display:block; margin:0 auto 0 0; max-width:100%; height:auto;">
+
+ {{< /team-member >}}
+
+---
