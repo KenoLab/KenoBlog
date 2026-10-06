@@ -3,7 +3,7 @@ title: Lanfeust Lab - the dictatorship of firstblood
 date: 2026-09-21
 description: "Lanfeust Lab by Kenolab team"
 tags: ["SSRF", "ESC7", "ESC17", "dollar ticket", "WDAC", "shadowcreds", "GMSA"]
-image: images/scoreboard.png
+image: images/cover.png
 authors:
   - "ethicxz"
 ---
