@@ -1,0 +1,34 @@
+<div class="suggestion col-sm-12 col-md-6 col-lg-4">
+    {{ partial "card-image.html" . }}
+
+    <div class="content">
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+
+        <div class="date-time">
+            {{ partial "date.html" .Date }}
+            &nbsp; &centerdot; &nbsp;
+            {{ partial "time-to-read.html" .}}
+        </div>
+
+        <p class="summary">
+            <a href="{{ .RelPermalink }}">
+                {{ with .Description }}
+                    {{ . }}
+                {{ else }}
+                    {{ $s := .Summary | plainify | htmlUnescape }}
+                    {{ if not .Params.image }}
+                        {{ $s  }}
+                    {{ else }}
+                        {{ substr $s 0 120 }}...
+                    {{ end }}
+                {{ end }}
+            </a>
+        </p>
+
+        <div class="tags">
+            {{ range .Params.tags }}
+            <a href="{{ (print "tags/" (. | urlize) | relURL) }}"><span class="tag bg-dark">{{ . }}</span></a>
+            {{ end }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{{- /* Card thumbnail. Large PNG, JPEG and WebP covers are resized to 800px wide (enough for 2x screens at card size)
+       and served as WebP. Smaller images, GIFs and other types are used as they are. The original files are never changed. */ -}}
+{{- $src := "" -}}
+{{- with .Params.image -}}
+    {{- $res := $.Resources.GetMatch . -}}
+    {{- if $res -}}
+        {{- if in (slice "png" "jpeg" "webp") $res.MediaType.SubType -}}
+            {{- if gt $res.Width 800 -}}
+                {{- $src = ($res.Resize "800x webp q85").RelPermalink -}}
+            {{- else -}}
+                {{- $src = $res.RelPermalink -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $src = $res.RelPermalink -}}
+        {{- end -}}
+    {{- else if or (hasPrefix . "http://") (hasPrefix . "https://") -}}
+        {{- $src = . -}}
+    {{- end -}}
+{{- end -}}
+{{- if $src -}}
+<a href="{{ $.RelPermalink }}">
+    <img src="{{ $src }}" alt="{{ $.Title }}" loading="lazy" decoding="async">
+</a>
+{{- end -}}

@@ -3,7 +3,7 @@ title: Lanfeust Lab - the dictatorship of firstblood
 date: 2026-09-21
 description: "Lanfeust Lab by Kenolab team"
 tags: ["SSRF", "ESC7", "ESC17", "dollar ticket", "WDAC", "shadowcreds", "GMSA"]
-image: images/scoreboard.png
+image: images/cover.png
 authors:
   - "ethicxz"
 ---
@@ -33,10 +33,10 @@ DARSHAN.LAB
 
 ## Before Starting
 
-```console
+```bash
 sudo wg-quick up ./troy01-04.conf
 
-my ip ➜ 198.51.100.44
+# my ip ➜ 198.51.100.44
 ```
 
 ## TROY.LAB
@@ -336,7 +336,7 @@ ADCS enumeration showed that `gmsa-hebus$` could enroll in the `TroyCodeSigning`
 
 ![alt text](images/gmsaenroll.png)
 
-```console
+```bash
 2
     Template Name                       : TroyCodeSigning
     Display Name                        : TroyCodeSigning

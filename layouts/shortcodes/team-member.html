@@ -35,4 +35,37 @@
     <div class="team-member-content">
         {{ .Page.RenderString .Inner }}
     </div>
+
+    {{- /* Optional link icons, set as parameters: {{< team-member author="x" github="https://..." x="https://..." >}} */ -}}
+    {{ $defs := slice
+        (dict "key" "github" "svg" "github" "label" "GitHub")
+        (dict "key" "x" "svg" "x" "label" "X")
+        (dict "key" "linkedin" "svg" "linkedin" "label" "LinkedIn")
+        (dict "key" "hackthebox" "svg" "hackthebox" "label" "HackTheBox")
+        (dict "key" "tryhackme" "svg" "tryhackme" "label" "TryHackMe")
+        (dict "key" "bluesky" "svg" "bluesky" "label" "Bluesky")
+        (dict "key" "blog" "svg" "earth" "label" "Blog")
+        (dict "key" "website" "svg" "earth" "label" "Website")
+        (dict "key" "mastodon" "svg" "mastodon" "label" "Mastodon")
+        (dict "key" "discord" "svg" "discord" "label" "Discord")
+        (dict "key" "youtube" "svg" "youtube" "label" "YouTube")
+    }}
+    {{ $hasLinks := false }}
+    {{ range $defs }}{{ if $.Get .key }}{{ $hasLinks = true }}{{ end }}{{ end }}
+    {{ if $hasLinks }}
+        <div class="team-member-links">
+            {{ range $defs }}
+                {{ $def := . }}
+                {{ with $.Get $def.key }}
+                    <a class="team-link" href="{{ . }}" target="_blank" rel="noopener noreferrer me"
+                        title="{{ $def.label }}" aria-label="{{ $def.label }}">
+                        {{- /* All icons are inline SVGs from assets/icons/<name>.svg (Simple Icons CC0, plus Material Design Icons for the globe) */ -}}
+                        {{ with resources.Get (printf "icons/%s.svg" $def.svg) }}
+                            {{ .Content | replaceRE "<title>[^<]*</title>" "" | replaceRE "<svg " "<svg aria-hidden=\"true\" focusable=\"false\" " | safeHTML }}
+                        {{ end }}
+                    </a>
+                {{ end }}
+            {{ end }}
+        </div>
+    {{ end }}
 </div>

@@ -1,0 +1,25 @@
+<div id="social-media-share">
+	<p class="share-title">Sharing is caring!</p>
+
+	<div class="share-buttons">
+	    <a  href="https://x.com/intent/post?text={{ .Title }}&url={{ .Permalink }}"
+	        onclick="socialMediaPopUp(this.href, '', 500, 500); return false;"
+	        title="Share on X. Opens in a new window.">
+	        <i class="fab fa-twitter"></i>
+	    </a>
+
+	    <a  href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}"
+	        onclick="socialMediaPopUp(this.href, '', 900, 500); return false;"
+	        title="Share on LinkedIn. Opens in a new window.">
+	        <i class="fab fa-linkedin-in"></i>
+	    </a>
+
+	    <a  href="https://www.reddit.com/submit?url={{ .Permalink }}&title={{ .Title }}"
+	        onclick="socialMediaPopUp(this.href, '', 900, 500); return false;"
+	        title="Share on Reddit. Opens in a new window.">
+	        <i class="fab fa-reddit-alien"></i>
+	    </a>
+
+
+	</div>
+</div>

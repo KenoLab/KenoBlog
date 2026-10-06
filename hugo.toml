@@ -10,7 +10,8 @@ summaryLength = 25
 disqusShortname = ""
 
 [params]
-    description = "KenoPlace for article talking about ; writeup, research and fun."
+    description = "Kenolab's articles about research, writeups and the topics we are passionate about."
+    images = ["image/cover.png"]
     contactEmail = "kenolab.contact@proton.me"
 
     footer = "© 2026 KenoBlog - Kenolab place for sharing and research"
@@ -51,17 +52,29 @@ disqusShortname = ""
             url = "/blog/writeup/"
             weight = 1
 
+            [menu.main.params]
+                description = "Lab and CTF solutions"
+                icon = "fa-flag-checkered"
+
         [[menu.main]]
             parent = "blog"
             name = "Fun"
             url = "/blog/fun/"
             weight = 2
 
+            [menu.main.params]
+                description = "Tech and other questionable ideas"
+                icon = "fa-ghost"
+
         [[menu.main]]
             parent = "blog"
             name = "R&D"
             url = "/blog/R&D/"
             weight = 3
+
+            [menu.main.params]
+                description = "Research from the Kenolab team"
+                icon = "fa-flask"
 
         [[menu.main]]
             parent = "blog"
@@ -74,13 +87,17 @@ disqusShortname = ""
             url = "/tags/"
             weight = 5
 
+            [menu.main.params]
+                description = "Browse articles by topic"
+                icon = "fa-tags"
+
     [[menu.main]]
         name = "Team"
         url = "/team"
         weight = 3
 
     [[menu.main]]
-        name = "Contact"
+        name = "Wiki"
         url = "https://wiki.kenolab.eu"
         weight = 30
 
@@ -94,6 +111,12 @@ disqusShortname = ""
 
 [markup.goldmark.renderer]
     unsafe = true
+
+[markup.goldmark.extensions]
+    table = true
+
+[markup.highlight]
+    style = "dracula"
 
 [caches]
     [caches.images]
