@@ -3,13 +3,15 @@
 <main class="blog-content">
     <div class="container-md">
         <div class="row">
-            <!-- Left advertisement (a narrower spacer when the TOC is shown, so the article sits more to the left) -->
-            <div class="{{ if $hasToc }}col-xl-1{{ else }}col-xl-2{{ end }} d-none d-xl-block">
-                <div class="ad-left-offset"></div>
-                {{ partial "ads.html" "ads/vertical-ad.js" }}
-            </div>
+            <!-- Left advertisement (dropped when the TOC is shown, so the article starts at the navbar's left edge) -->
+            {{ if not $hasToc }}
+                <div class="col-xl-2 d-none d-xl-block">
+                    <div class="ad-left-offset"></div>
+                    {{ partial "ads.html" "ads/vertical-ad.js" }}
+                </div>
+            {{ end }}
             <!-- Article -->
-            <div class="col-md-12 col-lg-8 px-lg-4">
+            <div class="col-md-12 col-lg-8 px-lg-4{{ if $hasToc }} col-xl-9 article-col-toc{{ end }}">
                 {{ partial "ads.html" "ads/horizontal-ad.js" }}
                 <!-- Title -->
                 <h1 class="title">

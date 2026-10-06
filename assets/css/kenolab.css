@@ -666,6 +666,20 @@ main.bg-offwhite::before {
     scroll-margin-top: 90px;
 }
 
+/* With a TOC the article fills everything left of it: align its text with the navbar's left edge */
+@media (min-width: 1200px) {
+    .blog-content .article-col-toc {
+        padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+    }
+}
+
+/* The cover spans the full article width (the theme caps every image at 25rem tall) */
+.blog-content #cover-image {
+    width: 100%;
+    height: auto;
+    max-height: none;
+}
+
 /* More room above each chapter */
 .blog-content h2 {
     margin-top: 3rem;
